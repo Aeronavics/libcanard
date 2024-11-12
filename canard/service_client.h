@@ -119,7 +119,7 @@ public:
 #if CANARD_ENABLE_CANFD
         req_transfer.canfd = canfd;
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
         req_transfer.iface_mask = CANARD_IFACE_ALL;
 #endif
         transfer_id = *TransferObject::get_tid_ptr(interface.get_index(), rsptype::cxx_iface::ID, CanardTransferTypeRequest, interface.get_node_id(), destination_node_id);

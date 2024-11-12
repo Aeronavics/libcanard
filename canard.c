@@ -149,7 +149,7 @@ int16_t canardBroadcast(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
                         ,uint64_t tx_deadline
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
                         ,uint8_t iface_mask
 #endif
 #if CANARD_ENABLE_CANFD
@@ -168,7 +168,7 @@ int16_t canardBroadcast(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
         .deadline_usec = tx_deadline,
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
         .iface_mask = iface_mask,
 #endif
 #if CANARD_ENABLE_CANFD
@@ -323,7 +323,7 @@ int16_t canardRequestOrRespond(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
                                ,uint64_t tx_deadline
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
                                ,uint8_t iface_mask
 #endif
 #if CANARD_ENABLE_CANFD
@@ -342,7 +342,7 @@ int16_t canardRequestOrRespond(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
         .deadline_usec = tx_deadline,
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
         .iface_mask = iface_mask,
 #endif
 #if CANARD_ENABLE_CANFD
@@ -690,14 +690,14 @@ void canardCleanupStaleTransfers(CanardInstance* ins, uint64_t current_time_usec
         }
     }
 
-#if CANARD_MULTI_IFACE || CANARD_ENABLE_DEADLINE
+#if defined(CANARD_MULTI_IFACE) || CANARD_ENABLE_DEADLINE
     // remove stale TX transfers
     CanardTxQueueItem* prev_item = ins->tx_queue, * item = ins->tx_queue;
     while (item != NULL)
     {
-#if CANARD_MULTI_IFACE && CANARD_ENABLE_DEADLINE
+#if defined(CANARD_MULTI_IFACE) && CANARD_ENABLE_DEADLINE
         if ((current_time_usec > item->frame.deadline_usec) || item->frame.iface_mask == 0)
-#elif CANARD_MULTI_IFACE
+#elif defined(CANARD_MULTI_IFACE)
         if (item->frame.iface_mask == 0)
 #else
         if (current_time_usec > item->frame.deadline_usec)
@@ -1163,7 +1163,7 @@ CANARD_INTERNAL int16_t enqueueTxFrames(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
         queue_item->frame.deadline_usec = transfer->deadline_usec;
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
         queue_item->frame.iface_mask = transfer->iface_mask;
 #endif
 #if CANARD_ENABLE_CANFD
@@ -1216,7 +1216,7 @@ CANARD_INTERNAL int16_t enqueueTxFrames(CanardInstance* ins,
 #if CANARD_ENABLE_DEADLINE
             queue_item->frame.deadline_usec = transfer->deadline_usec;
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
             queue_item->frame.iface_mask = transfer->iface_mask;
 #endif
 #if CANARD_ENABLE_CANFD
