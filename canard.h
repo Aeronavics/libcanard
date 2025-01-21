@@ -32,6 +32,8 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#include "config.h"
+
 /// Build configuration header. Use it to provide your overrides.
 #if defined(CANARD_ENABLE_CUSTOM_BUILD_CONFIG) && CANARD_ENABLE_CUSTOM_BUILD_CONFIG
 # include "canard_build_config.h"
@@ -50,9 +52,9 @@ extern "C" {
 #define CANARD_ENABLE_CANFD                         0
 #endif
 
-#ifndef CANARD_MULTI_IFACE
-#define CANARD_MULTI_IFACE                          0
-#endif
+// #ifndef CANARD_MULTI_IFACE
+// #define CANARD_MULTI_IFACE                          0
+// #endif
 
 #ifndef CANARD_ENABLE_DEADLINE
 #define CANARD_ENABLE_DEADLINE                      0
@@ -201,7 +203,7 @@ typedef struct
 #endif
     uint8_t data_len;
     uint8_t iface_id;
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
     uint8_t iface_mask;
 #endif
 #if CANARD_ENABLE_CANFD
@@ -263,7 +265,7 @@ typedef struct {
 #if CANARD_ENABLE_DEADLINE
     uint64_t deadline_usec; ///< Deadline in microseconds
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
     uint8_t iface_mask; ///< Bitmask of interfaces to send the transfer on
 #endif
 #if CANARD_ENABLE_TAO_OPTION
@@ -532,7 +534,7 @@ int16_t canardBroadcast(CanardInstance* ins,            ///< Library instance
 #if CANARD_ENABLE_DEADLINE
                         ,uint64_t tx_deadline           ///< Transmission deadline, microseconds
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
                         ,uint8_t iface_mask               ///< Bitmask of interfaces to transmit on
 #endif
 #if CANARD_ENABLE_CANFD
@@ -574,7 +576,7 @@ int16_t canardRequestOrRespond(CanardInstance* ins,             ///< Library ins
 #if CANARD_ENABLE_DEADLINE
                                ,uint64_t tx_deadline            ///< Transmission deadline, microseconds
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
                                ,uint8_t iface_mask               ///< Bitmask of interfaces to transmit on
 #endif
 #if CANARD_ENABLE_CANFD

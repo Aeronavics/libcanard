@@ -79,7 +79,7 @@ public:
 #if CANARD_ENABLE_CANFD
             rsp_transfer.canfd = transfer.canfd;
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
             rsp_transfer.iface_mask = iface_mask;
 #endif
             rsp_transfer.transfer_type = CanardTransferTypeResponse;
@@ -108,7 +108,7 @@ private:
 
     uint32_t timeout = 1000;
     uint8_t transfer_id = 0;
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
     uint8_t iface_mask = CANARD_IFACE_ALL;
 #endif
 };

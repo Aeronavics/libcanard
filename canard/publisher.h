@@ -125,7 +125,7 @@ public:
 #if CANARD_ENABLE_CANFD
             msg_transfer.canfd = canfd;
 #endif
-#if CANARD_MULTI_IFACE
+#ifdef CANARD_MULTI_IFACE
             msg_transfer.iface_mask = CANARD_IFACE_ALL;
 #endif
             return send(msg_transfer);
